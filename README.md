@@ -4,10 +4,10 @@ Implemented using Java to generate a static html site from a txt file.
 
 ----
 
-### Features 
+## Features 
 
 ----
-### Run
+## Run
 
 1. clone this repository
 2. open command line
@@ -16,9 +16,9 @@ Implemented using Java to generate a static html site from a txt file.
 java -jar out\artifacts\ssgApplication_jar\ssgApplication.jar <txtFileName>
 ```
 ----  
-### Output
+## Output
 
 You can find the generated output at out\artifacts\ssgApplication_jar\htmls
 
 ----  
-### Example
+## Example
