@@ -11,9 +11,9 @@ Implemented using Java to generate a static html site from a txt file.
 1. clone this repository
 2. open command line
 3. run .jar file using java -jar with the argument
-"""
+```bash
 java -jar out\artifacts\ssgApplication_jar\ssgApplication.jar <txtFileName>
-"""
+```
 ----  
 ### Output
 
