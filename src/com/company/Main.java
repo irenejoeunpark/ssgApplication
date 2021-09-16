@@ -8,19 +8,6 @@ public class Main {
 
         String txtFileName = fileNameReader(args);
 
-        String htmlFormB = "<!doctype html>\r\n"
-                + "<html lang=\"en\">\r\n"
-                + "<head>\r\n"
-                + "  <meta charset=\"utf-8\">\r\n"
-                + "  <title>Filename</title>\r\n"
-                + "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n"
-                + "</head>\r\n"
-                + "<body>\r\n"
-                + "";
-
-        String htmlFormE = "</body>\r\n"
-                + "</html>\r\n"
-                + "";
 
         String srcFile = "sources\\Sherlock-Holmes-Selected-Stories\\" + txtFileName;
         try {
@@ -33,13 +20,31 @@ public class Main {
             String beginParagraph = "<p>";
             String endPragraph = "</p>";
 
+            String htmlFormB = "<!doctype html>\r\n"
+                    + "<html lang=\"en\">\r\n"
+                    + "<head>\r\n"
+                    + "  <meta charset=\"utf-8\">\r\n"
+                    + "  <title>"
+                    + fileName
+                    + "</title>\r\n"
+                    + "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n"
+                    + "</head>\r\n"
+                    + "<body>\r\n"
+                    + "";
+
+            String htmlFormE = "</body>\r\n"
+                    + "</html>\r\n"
+                    + "";
+
             new File("htmls").mkdir();
 
-            //TODO :: place files in ./dist
-            //./dist/filName
+
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFileName),"UTF-8"));
 
             writer.write(htmlFormB);
+            aLine = reader.readLine();
+            writer.write("<h1>"+aLine + "</h1>");
+
             writer.write(beginParagraph);
             while((aLine = reader.readLine()) != null) {
                 aLine = aLine.trim();
