@@ -15,7 +15,7 @@ public class Main {
             String aLine;
 
             String fileName = txtFileName.split("\\.")[0];
-            String htmlFileName = "htmls/" + fileName + ".html";
+            String htmlFileName = "dist/" + fileName + ".html";
 
             String beginParagraph = "<p>";
             String endPragraph = "</p>";
@@ -36,7 +36,7 @@ public class Main {
                     + "</html>\r\n"
                     + "";
 
-            new File("htmls").mkdir();
+            new File("dist").mkdir();
 
 
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFileName),"UTF-8"));
