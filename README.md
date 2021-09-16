@@ -1,6 +1,7 @@
 # ssgApplication
 
 Implemented using Java to generate a static html site from a txt file.
+
 ----
 
 ### Features 
@@ -18,6 +19,6 @@ java -jar out\artifacts\ssgApplication_jar\ssgApplication.jar <txtFileName>
 ### Output
 
 You can find the generated output at out\artifacts\ssgApplication_jar\htmls
-  
+
 ----  
 ### Example
