@@ -5,13 +5,7 @@ import java.io.*;
 public class Main {
 
     public static void main(String[] args) {
-//
-//        try{
-//            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("file.html"),"UTF-8"));
-//
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }
+
         String txtFileName = fileNameReader(args);
 
         String htmlFormB = "<!doctype html>\r\n"
@@ -28,9 +22,9 @@ public class Main {
                 + "</html>\r\n"
                 + "";
 
-
+        String srcFile = "sources\\Sherlock-Holmes-Selected-Stories\\" + txtFileName;
         try {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(txtFileName),"UTF-8"));
+            BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(srcFile),"UTF-8"));
             String aLine;
 
             String fileName = txtFileName.split("\\.")[0];
@@ -39,7 +33,7 @@ public class Main {
             String beginParagraph = "<p>";
             String endPragraph = "</p>";
 
-            new File("dist").mkdir();
+            new File("htmls").mkdir();
 
             //TODO :: place files in ./dist
             //./dist/filName
