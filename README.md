@@ -6,7 +6,9 @@ Implemented using Java to generate a static html site from a txt file.
 
 ## Features 
 argument option "-v" or "--version" will display the current version of the application
+
 argument option "-h" or "--help" will display the list of command options
+
 argument option "-i" or "--i" will allow user input the single file or files by passing the directory
 
 ----
