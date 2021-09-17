@@ -10,6 +10,15 @@ argument option "-h" or "--help" will display the list of command options
 argument option "-i" or "--i" will allow user input the single file or files by passing the directory
 
 ----
+## Prerequisites
+-java
+
+----
+##Installation
+1. Clone this repository
+2. Locate the ssgApplication.jar
+3. 
+----
 ## Run
 
 1. clone this repository
@@ -19,14 +28,13 @@ argument option "-i" or "--i" will allow user input the single file or files by 
 java -jar out\artifacts\ssgApplication_jar\ssgApplication.jar -i <txtFileName>
 ```
 
-
 ----  
 ## Output
 
 You can find the generated outputs at \dist
 
 ----  
-## Example
+## Demo
 ```bash
 java -jar out\artifacts\ssgApplication_jar\ssgApplication.jar --version
 ssgApplication ver 1.0.0
@@ -48,3 +56,11 @@ java -jar out\artifacts\ssgApplication_jar\ssgApplication.jar -i sources\Sherloc
 >The Naval Treaty.html has been created in dist!
 >The Red Headed League.html has been created in dist!
 ```
+
+----
+##License
+MIT
+
+----
+##Deployment
+version 1.0.0, Sept 2021 by author Irene Park
