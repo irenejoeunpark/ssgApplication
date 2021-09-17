@@ -13,10 +13,9 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println(args[0]);
-
+        //reads the argument option
         if(args[0].equals("--version")|| args[0].equals("-v")){
-            System.out.println("ssgApplication ver 1.0.0");
+            System.out.println("ssgApplication ver 1.0.0, Sept 2021");
         } else if(args[0].equals("--help") || args[0].equals("-h")){
             System.out.println("---------------------------------------");
             System.out.println("* -v OR --version - current version   *");
@@ -24,6 +23,8 @@ public class Main {
             System.out.println("---------------------------------------");
 
         } else if(args[0].equals("--input") || args[0].equals("-i")){
+
+            //remove the option and store as file name by removing the first element of the argument array
             String[] fileNameFull = new String[args.length-1];
             for(int i=1;i<args.length;i++){
                 fileNameFull[i-1] = args[i];
@@ -46,14 +47,9 @@ public class Main {
                             .collect(Collectors.toList());
                     List<String> fileNames = new ArrayList<>() ;
                     for(File file :allFiles){
-//                        fileNames.add(file.getName());
                         createHtml(file);
                     }
-//
-//                    for(String filename : fileNames){
-//                        //create html
-//
-//                    }
+
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -70,6 +66,7 @@ public class Main {
 
 
     private static String fileNameReader(String[] str) {
+        //convert string array to string with the space
         StringBuilder s = new StringBuilder();
         for(String arg: str) {
             s.append(arg).append(" ");
@@ -79,24 +76,34 @@ public class Main {
 
     private static void createHtml(File fileName){
         try{
+
+            //read file
+            //used inputstremreader because of an encoding issue for the closing double quote
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName),"UTF-8"));
             String aLine;
 
-
+            //remove .txt
             String fName = fileName.toString().split("\\.")[0];
+
+            //only getting the file name from the entire file address
             String[] getOnlyName = fName.split("\\\\");
             String name = getOnlyName[getOnlyName.length-1];
 
             String htmlFileName = "dist/" + name + ".html";
 
-
+            //pre-formed html forms
             String beginParagraph = "<p>";
-            String endPragraph = "</p>";
+            String endPragraph = "</p><br/>";
 
             String htmlFormB = "<!doctype html>\r\n"
                     + "<html lang=\"en\">\r\n"
                     + "<head>\r\n"
                     + "  <meta charset=\"utf-8\">\r\n"
+                    + "<STYLE type=\"text/css\">\n"
+                    + "   H1 {border-width: 1; border: solid; text-align: center; font-family: Arial, Helvetica, sans-serif}\n"
+                    + "   p{font-family: Arial, Helvetica, sans-serif;}\n"
+                    + "    body {background-color: #d6ecf3;padding-left: 10%;padding-right:10%; padding-top: 0.5%;line-height: 1.5;text-align: center;}\n"
+                    + " </STYLE>"
                     + "  <title>"
                     + name
                     + "</title>\r\n"
@@ -108,16 +115,19 @@ public class Main {
             String htmlFormE = "</body>\r\n"
                     + "</html>\r\n"
                     + "";
+
+            //create directory if not exist
             new File("dist").mkdir();
 
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFileName),"UTF-8"));
             writer.write(htmlFormB);
             aLine = reader.readLine();
-            writer.write("<h1>"+aLine + "</h1>");
+            writer.write("<h1>"+aLine + "</h1><br/><br/>");
 
             writer.write(beginParagraph);
             while((aLine = reader.readLine()) != null) {
                 aLine = aLine.trim();
+                //find the paragraph end
                 if(aLine.length() == 0) {
                     writer.write(endPragraph);
                     writer.newLine();
@@ -129,7 +139,7 @@ public class Main {
             writer.write(htmlFormE);
             writer.close();
 
-
+            //for logging
             System.out.println(name + ".html has been created in dist!");
 
         }catch(IOException e) {
