@@ -11,7 +11,7 @@ argument option "-i" or "--i" will allow user input the single file or files by 
 
 ----
 ## Prerequisites
--java
+java
 
 ----
 ##Installation
