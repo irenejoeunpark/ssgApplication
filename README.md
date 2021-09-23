@@ -9,7 +9,8 @@ argument option "-v" or "--version" will display the current version of the appl
 
 argument option "-h" or "--help" will display the list of command options
 
-argument option "-i" or "--i" will allow user input the single file or files by passing the directory
+argument option "-i" or "--i" will allow user input the single file or files by passing the directory. It supports both .txt and .md (feature: Heading)
+
 
 ----
 ## Prerequisites
