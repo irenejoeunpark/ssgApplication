@@ -38,7 +38,20 @@ public class Main {
                 //create html
                 createHtml(file);
 
-            }else {
+            }
+            else if(inputFile.endsWith(".md")){
+                try{
+                    //if input file is only one file
+                    File file = new File(inputFile);
+                    //create html
+                    MDUtils.createHTMLFromMd(file);
+                }
+                catch(Exception ex){
+                    ex.printStackTrace();
+                }
+
+            }
+            else {
                 //if user added multiple files(directory)
                 try {
                     List<File> allFiles = Files.walk(Paths.get(inputFile))
