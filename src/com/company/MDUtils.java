@@ -12,7 +12,7 @@ public class MDUtils {
         String title = convertedText.split("<br/>")[0].replace("# ","");
 
         String body = MDUtils.getBodyFromText(convertedText.split("<br/>"));
-
+        body = DoubleAsteriskMarkdownParser.parseMarkdownLine(body.split("<br/>"));
 
         // Complete HTML file
         String html = "<!doctype html>\r\n"
@@ -68,11 +68,10 @@ public class MDUtils {
         StringBuilder sb = new StringBuilder();
 
         for(int i = 0; i < lines.length; i++){
-            if(lines[i].substring(0,2).equals("# ")){
-                sb.append("<h1>").append(lines[i].replace("# ","")).append("</h1>").append("<br/>");
-            }
-            else if(lines[i].length()==0){
+            if(lines[i].length()==0){
                 sb.append("<br/>");
+            } else if(lines[i].substring(0,2).equals("# ")){
+                sb.append("<h1>").append(lines[i].replace("# ","")).append("</h1>").append("<br/>");
             }
             else{
                 sb.append("<p>").append(lines[i]).append("</p>").append("<br/>");

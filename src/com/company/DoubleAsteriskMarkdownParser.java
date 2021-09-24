@@ -1,6 +1,6 @@
 package com.company;
 
-public class MarkdownParser {
+public class DoubleAsteriskMarkdownParser {
     private StringBuilder htmlBuffer = new StringBuilder();
     private boolean isFirstPairOfAsterisksFound = false;
     private boolean isFirstAsteriskFound = false;
@@ -70,13 +70,27 @@ public class MarkdownParser {
         return indexForOpeningDelimiter >= 0 && indexOfLastAppearingWhitespace - indexForOpeningDelimiter == 2;
     }
 
-    public static String parseMarkdownLine(String rawText) {
-        MarkdownParser parser = new MarkdownParser();
+    private void clear() {
+        htmlBuffer.setLength(0);
+        isFirstPairOfAsterisksFound = false;
+        isFirstAsteriskFound = false;
+        indexForOpeningDelimiter = -1;
+        indexOfLastAppearingWhitespace = -1;
+    }
 
-        for (int i = 0; i < rawText.length(); ++i) {
-            parser.acceptCharacter(rawText.charAt(i));
+    public static String parseMarkdownLine(String[] rawTextLines) {
+        StringBuilder paragraphs = new StringBuilder();
+        DoubleAsteriskMarkdownParser parser = new DoubleAsteriskMarkdownParser();
+
+        for (String line : rawTextLines) {
+            for (int i = 0; i < line.length(); ++i) {
+                parser.acceptCharacter(line.charAt(i));
+            }
+
+            paragraphs.append(parser.returnParsedLine());
+            parser.clear();
         }
 
-        return parser.returnParsedLine();
+        return paragraphs.toString();
     }
 }
