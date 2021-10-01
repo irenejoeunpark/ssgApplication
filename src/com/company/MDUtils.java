@@ -81,6 +81,8 @@ public class MDUtils {
                     sb.append("<p><code>").append(lines[i].replace("```","")).append("</code></p>").append("<br/>");
                 } else if (lines[i].startsWith("*")){
                     sb.append("<p><strong>").append(lines[i].replace("*","")).append("</strong></p>").append("<br/>");
+                } else if (lines[i].startsWith("----")){
+                    sb.append("<hr>").append("<br/>");
                 } else{
                     sb.append("<p>").append(lines[i]).append("</p>").append("<br/>");
                 }
