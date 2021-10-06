@@ -21,6 +21,7 @@ public class Main {
             System.out.println("---------------------------------------");
             System.out.println("* -v OR --version - current version   *");
             System.out.println("* -i OR --input - input file or files *");
+            System.out.println("* -c OR --config - JSON config file   *");
             System.out.println("---------------------------------------");
 
         } else if(args[0].equals("--input") || args[0].equals("-i")){
@@ -41,7 +42,7 @@ public class Main {
             try {
                 Object configObject = parser.parse(new FileReader(args[1]));
 			    JSONObject configJsonObject = (JSONObject) configObject;
-                
+
                 String input = "";
                 String output = "";
 
