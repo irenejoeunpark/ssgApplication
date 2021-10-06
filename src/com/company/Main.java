@@ -7,7 +7,8 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 public class Main {
 
@@ -30,53 +31,87 @@ public class Main {
                 fileNameFull[i-1] = args[i];
             }
 
-            String inputFile = fileNameReader(fileNameFull);
-            if(inputFile.endsWith(".txt")){
-                //if input file is only one file
-                File file = new File(inputFile);
-                String fileName = file.getName();
-                //create html
-                createHtml(file);
+            processInput(fileNameReader(fileNameFull), "dist");
 
-            }
-            else if(inputFile.endsWith(".md")){
-                try{
-                    //if input file is only one file
-                    File file = new File(inputFile);
-                    //create html
-                    MDUtils.createHTMLFromMd(file);
-                }
-                catch(Exception ex){
-                    ex.printStackTrace();
+        } else if(args[0].equals("--config") || args[0].equals("-c")) {
+
+            //parses JSON file for input and output values  
+            JSONParser parser = new JSONParser();
+            
+            try {
+                Object configObject = parser.parse(new FileReader(args[1]));
+			    JSONObject configJsonObject = (JSONObject) configObject;
+                
+                String input = "";
+                String output = "";
+
+                if ((String) configJsonObject.get("input") == null) {
+                    throw new Exception("Invalid input file/folder passed. Please pass a valid input");
+                } else {
+                    input = (String) configJsonObject.get("input");
                 }
 
-            }
-            else {
-                //if user added multiple files(directory)
-                try {
-                    List<File> allFiles = Files.walk(Paths.get(inputFile))
-                            .filter(Files::isRegularFile)
-                            .map(Path::toFile)
-                            .collect(Collectors.toList());
-                    List<String> fileNames = new ArrayList<>() ;
-                    for(File file :allFiles){
-                        createHtml(file);
-                    }
-
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if ((String) configJsonObject.get("output") == null) {
+                    output = "dist";
+                } else {
+                    output = (String) configJsonObject.get("output");
                 }
+
+                processInput(input, output);
+
+            } catch (FileNotFoundException ex) {
+                System.out.println("The config file could not be found");
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage() == null ? "The config file could not be parsed" : ex.getMessage());
             }
 
 
 
-        }else {
+        } else {
             System.out.println("Invalid argument passed. Please pass a valid argument");
         }
 
 
     }
 
+    private static void processInput (String inputFile, String output) {
+        if(inputFile.endsWith(".txt")){
+            //if input file is only one file
+            File file = new File(inputFile);
+            String fileName = file.getName();
+            //create html
+            createHtml(file, output);
+
+        }
+        else if(inputFile.endsWith(".md")){
+            try{
+                //if input file is only one file
+                File file = new File(inputFile);
+                //create html
+                MDUtils.createHTMLFromMd(file);
+            }
+            catch(Exception ex){
+                ex.printStackTrace();
+            }
+
+        }
+        else {
+            //if user added multiple files(directory)
+            try {
+                List<File> allFiles = Files.walk(Paths.get(inputFile))
+                        .filter(Files::isRegularFile)
+                        .map(Path::toFile)
+                        .collect(Collectors.toList());
+                List<String> fileNames = new ArrayList<>() ;
+                for(File file :allFiles){
+                    createHtml(file, output);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
     private static String fileNameReader(String[] str) {
         //convert string array to string with the space
@@ -87,7 +122,7 @@ public class Main {
         return s.substring(0,s.length() -1);
     }
 
-    private static void createHtml(File fileName){
+    private static void createHtml(File fileName, String output){
         try{
 
             //read file
@@ -102,7 +137,7 @@ public class Main {
             String[] getOnlyName = fName.split("\\\\");
             String name = getOnlyName[getOnlyName.length-1];
 
-            String htmlFileName = "dist/" + name + ".html";
+            String htmlFileName = output + "/" + name + ".html";
 
             //pre-formed html forms
             String beginParagraph = "<p>";
@@ -130,7 +165,7 @@ public class Main {
                     + "";
 
             //create directory if not exist
-            new File("dist").mkdir();
+            new File(output).mkdir();
 
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFileName),"UTF-8"));
             writer.write(htmlFormB);
@@ -153,7 +188,7 @@ public class Main {
             writer.close();
 
             //for logging
-            System.out.println(name + ".html has been created in dist!");
+            System.out.println(name + ".html has been created in " + output + "!");
 
         }catch(IOException e) {
             e.printStackTrace();
