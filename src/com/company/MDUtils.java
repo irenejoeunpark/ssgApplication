@@ -57,7 +57,6 @@ public class MDUtils {
                 }
             }
 
-            br.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -68,7 +67,6 @@ public class MDUtils {
 
     public static String getBodyFromText(String[] lines){
         StringBuilder sb = new StringBuilder();
-        Boolean inCodeBlock = false;
 
         for(int i = 0; i < lines.length; i++){
             System.out.println(lines[i]);
@@ -91,8 +89,5 @@ public class MDUtils {
         return sb.toString();
     }
 
-    public static Boolean isCodeBlockTag(String line){
-        return line.startsWith("```");
-    }
 
 }

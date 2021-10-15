@@ -1,14 +1,14 @@
 package com.company;
 
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 public class Main {
 
@@ -79,10 +79,8 @@ public class Main {
         if(inputFile.endsWith(".txt")){
             //if input file is only one file
             File file = new File(inputFile);
-            String fileName = file.getName();
             //create html
             createHtml(file, output);
-
         }
         else if(inputFile.endsWith(".md")){
             try{
@@ -94,7 +92,6 @@ public class Main {
             catch(Exception ex){
                 ex.printStackTrace();
             }
-
         }
         else {
             //if user added multiple files(directory)
@@ -103,7 +100,6 @@ public class Main {
                         .filter(Files::isRegularFile)
                         .map(Path::toFile)
                         .collect(Collectors.toList());
-                List<String> fileNames = new ArrayList<>() ;
                 for(File file :allFiles){
                     createHtml(file, output);
                 }
