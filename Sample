@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Sample</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+
+<code>```</code><p>print("Hello World");</p><code>```</code>
+
+<code>```java</code><p>System.out.println("Testing");</p><code>```</code></body>
+</html>
