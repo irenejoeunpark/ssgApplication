@@ -1,8 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="ssgApplication:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/ssgApplication_jar</output-path>
-    <root id="archive" name="ssgApplication.jar">
-      <element id="module-output" name="ssgApplication" />
-    </root>
+    <root id="archive" name="ssgApplication.jar" />
   </artifact>
 </component>

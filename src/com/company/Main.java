@@ -66,12 +66,9 @@ public class Main {
                 System.out.println(ex.getMessage() == null ? "The config file could not be parsed" : ex.getMessage());
             }
 
-
-
         } else {
             System.out.println("Invalid argument passed. Please pass a valid argument");
         }
-
 
     }
 
@@ -80,7 +77,8 @@ public class Main {
             //if input file is only one file
             File file = new File(inputFile);
             //create html
-            createHtml(file, output);
+            createHtmlFromTxt(file, output);
+
         }
         else if(inputFile.endsWith(".md")){
             try{
@@ -101,7 +99,7 @@ public class Main {
                         .map(Path::toFile)
                         .collect(Collectors.toList());
                 for(File file :allFiles){
-                    createHtml(file, output);
+                    createHtmlFromTxt(file, output);
                 }
 
             } catch (IOException e) {
@@ -119,9 +117,8 @@ public class Main {
         return s.substring(0,s.length() -1);
     }
 
-    private static void createHtml(File fileName, String output){
+    private static void createHtmlFromTxt(File fileName, String output){
         try{
-
             //read file
             //used inputstremreader because of an encoding issue for the closing double quote
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName),"UTF-8"));
@@ -136,10 +133,43 @@ public class Main {
 
             String htmlFileName = output + "/" + name + ".html";
 
-            //pre-formed html forms
             String beginParagraph = "<p>";
             String endPragraph = "</p><br/>";
 
+            //create directory if not exist
+            new File(output).mkdir();
+
+            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFileName),"UTF-8"));
+
+            writeHtmlB(writer,name);
+
+            aLine = reader.readLine();
+            writer.write("<h1>"+aLine + "</h1><br/><br/>");
+
+            writer.write(beginParagraph);
+            while((aLine = reader.readLine()) != null) {
+                aLine = aLine.trim();
+                //find the paragraph end
+                if(aLine.length() == 0) {
+                    writer.write(endPragraph);
+                    writer.newLine();
+                    writer.write(beginParagraph);
+                }
+                writer.write(aLine);
+            }
+            writer.write(endPragraph);
+            writeHtmlE(writer);
+
+            //for logging
+            System.out.println(name + ".html has been created in " + output + "!");
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    private static void writeHtmlB(BufferedWriter writer, String name){
+        try {
             String htmlFormB = "<!doctype html>\r\n"
                     + "<html lang=\"en\">\r\n"
                     + "<head>\r\n"
@@ -157,40 +187,23 @@ public class Main {
                     + "<body>\r\n"
                     + "";
 
-            String htmlFormE = "</body>\r\n"
-                    + "</html>\r\n"
-                    + "";
-
-            //create directory if not exist
-            new File(output).mkdir();
-
-            BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFileName),"UTF-8"));
             writer.write(htmlFormB);
-            aLine = reader.readLine();
-            writer.write("<h1>"+aLine + "</h1><br/><br/>");
-
-            writer.write(beginParagraph);
-            while((aLine = reader.readLine()) != null) {
-                aLine = aLine.trim();
-                //find the paragraph end
-                if(aLine.length() == 0) {
-                    writer.write(endPragraph);
-                    writer.newLine();
-                    writer.write(beginParagraph);
-                }
-                writer.write(aLine);
-            }
-            writer.write(endPragraph);
-            writer.write(htmlFormE);
-            writer.close();
-
-            //for logging
-            System.out.println(name + ".html has been created in " + output + "!");
-
-        }catch(IOException e) {
+        }catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    private static void writeHtmlE(BufferedWriter writer){
+        try {
+            String htmlFormE = "</body>\r\n"
+                    + "</html>\r\n"
+                    + "";
+            writer.write(htmlFormE);
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
 
 }
