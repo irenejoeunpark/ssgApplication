@@ -11,10 +11,11 @@ public class MDUtils {
     public static void createHTMLFromMd(File file) throws IOException {
         String convertedText = MDUtils.readFile(file);
 
-        String title = convertedText.split("<br/>")[0].replace("# ","");
+        String br = "<br/>";
+        String title = convertedText.split(br)[0].replace("# ","");
 
-        String body = MDUtils.getBodyFromText(convertedText.split("<br/>"));
-        body = DoubleAsteriskMarkdownParser.parseMarkdownLine(body.split("<br/>"));
+        String body = MDUtils.getBodyFromText(convertedText.split(br));
+        body = DoubleAsteriskMarkdownParser.parseMarkdownLine(body.split(br));
 
         // Complete HTML file
         String html = "<!doctype html>\r\n"
@@ -67,22 +68,23 @@ public class MDUtils {
 
     public static String getBodyFromText(String[] lines){
         StringBuilder sb = new StringBuilder();
+        String br = "<br/>";
 
         for(int i = 0; i < lines.length; i++){
             System.out.println(lines[i]);
             if(lines[i].length()==0){
-                sb.append("<br/>");
+                sb.append(br);
             } else {
                 if(lines[i].startsWith("# ")){
-                    sb.append("<h1>").append(lines[i].replace("# ","")).append("</h1>").append("<br/>");
+                    sb.append("<h1>").append(lines[i].replace("# ","")).append("</h1>").append(br);
                 } else if (lines[i].startsWith("```")){
-                    sb.append("<p><code>").append(lines[i].replace("```","")).append("</code></p>").append("<br/>");
+                    sb.append("<p><code>").append(lines[i].replace("```","")).append("</code></p>").append(br);
                 } else if (lines[i].startsWith("*")){
-                    sb.append("<p><strong>").append(lines[i].replace("*","")).append("</strong></p>").append("<br/>");
+                    sb.append("<p><strong>").append(lines[i].replace("*","")).append("</strong></p>").append(br);
                 } else if (lines[i].startsWith("----")){
-                    sb.append("<hr>").append("<br/>");
+                    sb.append("<hr>").append(br);
                 } else{
-                    sb.append("<p>").append(lines[i]).append("</p>").append("<br/>");
+                    sb.append("<p>").append(lines[i]).append("</p>").append(br);
                 }
             }
         }
