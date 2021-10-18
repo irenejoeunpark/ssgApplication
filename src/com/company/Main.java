@@ -3,15 +3,11 @@ package com.company;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
+
+import static com.company.HTMLBuilder.fileNameReader;
+import static com.company.HTMLBuilder.processInput;
 
 public class Main {
 
@@ -53,16 +49,16 @@ public class Main {
             Object configObject = parser.parse(new FileReader(args[1]));
             JSONObject configJsonObject = (JSONObject) configObject;
 
-            String input = "";
-            String output = "";
+            String input;
+            String output;
 
-            if ((String) configJsonObject.get("input") == null) {
+            if (configJsonObject.get("input") == null) {
                 throw new Exception("Invalid input file/folder passed. Please pass a valid input");
             } else {
                 input = (String) configJsonObject.get("input");
             }
 
-            if ((String) configJsonObject.get("output") == null) {
+            if (configJsonObject.get("output") == null) {
                 output = "dist";
             } else {
                 output = (String) configJsonObject.get("output");
@@ -77,53 +73,5 @@ public class Main {
         }
 
     }
-
-    private static void processInput (String inputFile, String output) {
-        if(inputFile.endsWith(".txt")){
-            //if input file is only one file
-            File file = new File(inputFile);
-            //create html
-            TextUtils.createHtmlFromTxt(file, output);
-
-        }
-        else if(inputFile.endsWith(".md")){
-            try{
-                //if input file is only one file
-                File file = new File(inputFile);
-                //create html
-                MDUtils.createHTMLFromMd(file);
-            }
-            catch(Exception ex){
-                ex.printStackTrace();
-            }
-        }
-        else {
-            //if user added multiple files(directory)
-            try {
-                List<File> allFiles = Files.walk(Paths.get(inputFile))
-                        .filter(Files::isRegularFile)
-                        .map(Path::toFile)
-                        .collect(Collectors.toList());
-                for(File file :allFiles){
-                    TextUtils.createHtmlFromTxt(file, output);
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private static String fileNameReader(String[] str) {
-        //convert string array to string with the space
-        StringBuilder s = new StringBuilder();
-        for(String arg: str) {
-            s.append(arg).append(" ");
-        }
-        return s.substring(0,s.length() -1);
-    }
-
-
-
 
 }

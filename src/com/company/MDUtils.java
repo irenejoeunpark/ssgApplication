@@ -1,9 +1,11 @@
 package com.company;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+
+import static com.company.HTMLBuilder.writeHtmlHeader;
+import static com.company.HTMLBuilder.writehtmlFoot;
 
 public class MDUtils {
 
@@ -17,30 +19,17 @@ public class MDUtils {
         String body = MDUtils.getBodyFromText(convertedText.split(br));
         body = DoubleAsteriskMarkdownParser.parseMarkdownLine(body.split(br));
 
-        // Complete HTML file
-        String html = "<!doctype html>\r\n"
-                + "<html lang=\"en\">\r\n"
-                + "<head>\r\n"
-                + "  <meta charset=\"utf-8\">\r\n"
-                + "  <title>"
-                + title
-                + "</title>\r\n"
-                + "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n"
-                + "</head>\r\n"
-                + "<body>\r\n"
-                + body
-                + "</body>\r\n"
-                + "</html>\r\n"
-                + "";
-
         // write File
         String htmlFileName = "dist\\" + title + ".html";
 
         Path path = Paths.get(htmlFileName);
 
-        byte[] strToBytes = html.getBytes();
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFileName),"UTF-8"));
+        writeHtmlHeader(writer,path.toString());
+        writer.write(body);
 
-        Files.write(path, strToBytes);
+        writehtmlFoot(writer);
+        writer.close();
 
     }
 
