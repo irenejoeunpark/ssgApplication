@@ -26,12 +26,12 @@ public class Main {
         } else if(args[0].equals("--input") || args[0].equals("-i")){
 
             //remove the option and store as file name by removing the first element of the argument array
-            String[] fileNameFull = new String[args.length-1];
+            String[] fileName = new String[args.length-1];
             for(int i=1;i<args.length;i++){
-                fileNameFull[i-1] = args[i];
+                fileName[i-1] = args[i];
             }
 
-            processInput(fileNameReader(fileNameFull), "dist");
+            processInput(fileNameReader(fileName), "dist");
 
         } else if(args[0].equals("--config") || args[0].equals("-c")) {
             updateConfiguration(args);
@@ -46,8 +46,7 @@ public class Main {
         JSONParser parser = new JSONParser();
 
         try {
-            Object configObject = parser.parse(new FileReader(args[1]));
-            JSONObject configJsonObject = (JSONObject) configObject;
+            JSONObject configJsonObject = (JSONObject) parser.parse(new FileReader(args[1]));
 
             String input;
             String output;

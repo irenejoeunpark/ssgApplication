@@ -9,20 +9,15 @@ public class TextUtils {
     public static void createHtmlFromTxt(File fileName, String output) {
         try{
             //read file
-            //used inputstremreader because of an encoding issue for the closing double quote
+            //used InputStreamReader because of an encoding issue for the closing double quote
             BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName),"UTF-8"));
 
-            //remove .txt
-            String fName = fileName.toString().split("\\.")[0];
-
-            //only getting the file name from the entire file address
-            String[] getOnlyName = fName.split("\\\\");
-            String name = getOnlyName[getOnlyName.length-1];
-
+            //remove .txt and  get the file name from the entire file address
+            String name = fileName.toString().split("\\.")[0].split("\\\\")[fileName.toString().split("\\.")[0].split("\\\\").length-1];
             String htmlFileName = output + "/" + name + ".html";
 
-            String beginParagraph = "<p>";
-            String endPragraph = "</p><br/>";
+            String pOpen = "<p>";
+            String pClose = "</p><br/>";
 
             //create directory if not exist
             new File(output).mkdir();
@@ -34,18 +29,18 @@ public class TextUtils {
             String aLine = reader.readLine();
             writer.write(new StringBuilder().append("<h1>").append(aLine).append("</h1><br/><br/>").toString());
 
-            writer.write(beginParagraph);
+            writer.write(pOpen);
             while((aLine = reader.readLine()) != null) {
                 aLine = aLine.trim();
                 //find the paragraph end
                 if(aLine.length() == 0) {
-                    writer.write(endPragraph);
+                    writer.write(pClose);
                     writer.newLine();
-                    writer.write(beginParagraph);
+                    writer.write(pOpen);
                 }
                 writer.write(aLine);
             }
-            writer.write(endPragraph);
+            writer.write(pClose);
             writehtmlFoot(writer);
 
             //for logging

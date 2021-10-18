@@ -54,7 +54,7 @@ public class HTMLBuilder {
         return s.substring(0,s.length() -1);
     }
 
-    public static void writeHtmlHeader(BufferedWriter writer, String name){
+    public static void writeHtmlHeader(BufferedWriter writer, String fileName){
         try {
             String htmlHeader = "<!doctype html>\r\n"
                     + "<html lang=\"en\">\r\n"
@@ -66,7 +66,7 @@ public class HTMLBuilder {
                     + "    body {background-color: #d6ecf3;padding-left: 10%;padding-right:10%; padding-top: 0.5%;line-height: 1.5;text-align: center;}\n"
                     + " </STYLE>"
                     + "  <title>"
-                    + name
+                    + fileName
                     + "</title>\r\n"
                     + "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n"
                     + "</head>\r\n"
