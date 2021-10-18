@@ -52,4 +52,44 @@ public class TextUtils {
             e.printStackTrace();
         }
     }
+
+    private static void writeHtmlB(BufferedWriter writer, String name){
+        try {
+            String htmlFormB = "<!doctype html>\r\n"
+                    + "<html lang=\"en\">\r\n"
+                    + "<head>\r\n"
+                    + "  <meta charset=\"utf-8\">\r\n"
+                    + "<STYLE type=\"text/css\">\n"
+                    + "   H1 {border-width: 1; border: solid; text-align: center; font-family: Arial, Helvetica, sans-serif}\n"
+                    + "   p{font-family: Arial, Helvetica, sans-serif;}\n"
+                    + "    body {background-color: #d6ecf3;padding-left: 10%;padding-right:10%; padding-top: 0.5%;line-height: 1.5;text-align: center;}\n"
+                    + " </STYLE>"
+                    + "  <title>"
+                    + name
+                    + "</title>\r\n"
+                    + "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n"
+                    + "</head>\r\n"
+                    + "<body>\r\n"
+                    + "";
+
+            writer.write(htmlFormB);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void writeHtmlE(BufferedWriter writer){
+        try {
+            String htmlFormE = "</body>\r\n"
+                    + "</html>\r\n"
+                    + "";
+            writer.write(htmlFormE);
+            writer.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+
 }

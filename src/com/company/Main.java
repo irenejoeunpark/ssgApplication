@@ -3,7 +3,10 @@ package com.company;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,39 +38,42 @@ public class Main {
             processInput(fileNameReader(fileNameFull), "dist");
 
         } else if(args[0].equals("--config") || args[0].equals("-c")) {
-
-            //parses JSON file for input and output values  
-            JSONParser parser = new JSONParser();
-            
-            try {
-                Object configObject = parser.parse(new FileReader(args[1]));
-			    JSONObject configJsonObject = (JSONObject) configObject;
-
-                String input = "";
-                String output = "";
-
-                if ((String) configJsonObject.get("input") == null) {
-                    throw new Exception("Invalid input file/folder passed. Please pass a valid input");
-                } else {
-                    input = (String) configJsonObject.get("input");
-                }
-
-                if ((String) configJsonObject.get("output") == null) {
-                    output = "dist";
-                } else {
-                    output = (String) configJsonObject.get("output");
-                }
-
-                processInput(input, output);
-
-            } catch (FileNotFoundException ex) {
-                System.out.println("The config file could not be found");
-            } catch (Exception ex) {
-                System.out.println(ex.getMessage() == null ? "The config file could not be parsed" : ex.getMessage());
-            }
-
+            updateConfiguration(args);
         } else {
             System.out.println("Invalid argument passed. Please pass a valid argument");
+        }
+
+    }
+
+    private static void updateConfiguration(String[] args) {
+        //parses JSON file for input and output values
+        JSONParser parser = new JSONParser();
+
+        try {
+            Object configObject = parser.parse(new FileReader(args[1]));
+            JSONObject configJsonObject = (JSONObject) configObject;
+
+            String input = "";
+            String output = "";
+
+            if ((String) configJsonObject.get("input") == null) {
+                throw new Exception("Invalid input file/folder passed. Please pass a valid input");
+            } else {
+                input = (String) configJsonObject.get("input");
+            }
+
+            if ((String) configJsonObject.get("output") == null) {
+                output = "dist";
+            } else {
+                output = (String) configJsonObject.get("output");
+            }
+
+            processInput(input, output);
+
+        } catch (FileNotFoundException ex) {
+            System.out.println("The config file could not be found");
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage() == null ? "The config file could not be parsed" : ex.getMessage());
         }
 
     }
@@ -77,7 +83,7 @@ public class Main {
             //if input file is only one file
             File file = new File(inputFile);
             //create html
-            TextUtil.createHtmlFromTxt(file, output);
+            TextUtils.createHtmlFromTxt(file, output);
 
         }
         else if(inputFile.endsWith(".md")){
@@ -99,7 +105,7 @@ public class Main {
                         .map(Path::toFile)
                         .collect(Collectors.toList());
                 for(File file :allFiles){
-                    createHtmlFromTxt(file, output);
+                    TextUtils.createHtmlFromTxt(file, output);
                 }
 
             } catch (IOException e) {
@@ -118,42 +124,6 @@ public class Main {
     }
 
 
-    private static void writeHtmlB(BufferedWriter writer, String name){
-        try {
-            String htmlFormB = "<!doctype html>\r\n"
-                    + "<html lang=\"en\">\r\n"
-                    + "<head>\r\n"
-                    + "  <meta charset=\"utf-8\">\r\n"
-                    + "<STYLE type=\"text/css\">\n"
-                    + "   H1 {border-width: 1; border: solid; text-align: center; font-family: Arial, Helvetica, sans-serif}\n"
-                    + "   p{font-family: Arial, Helvetica, sans-serif;}\n"
-                    + "    body {background-color: #d6ecf3;padding-left: 10%;padding-right:10%; padding-top: 0.5%;line-height: 1.5;text-align: center;}\n"
-                    + " </STYLE>"
-                    + "  <title>"
-                    + name
-                    + "</title>\r\n"
-                    + "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n"
-                    + "</head>\r\n"
-                    + "<body>\r\n"
-                    + "";
 
-            writer.write(htmlFormB);
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private static void writeHtmlE(BufferedWriter writer){
-        try {
-            String htmlFormE = "</body>\r\n"
-                    + "</html>\r\n"
-                    + "";
-            writer.write(htmlFormE);
-            writer.close();
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-    }
 
 }

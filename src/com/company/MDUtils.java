@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 
 public class MDUtils {
 
+    public static void createHTMLFromMd(File file) throws IOException{
 
-    public static void createHTMLFromMd(File file) throws IOException {
         String convertedText = MDUtils.readFile(file);
 
         String br = "<br/>";
