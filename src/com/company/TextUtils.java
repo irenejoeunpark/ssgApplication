@@ -3,7 +3,7 @@ package com.company;
 import java.io.*;
 
 import static com.company.HTMLBuilder.writeHtmlHeader;
-import static com.company.HTMLBuilder.writehtmlFoot;
+import static com.company.HTMLBuilder.writeHtmlFoot;
 
 public class TextUtils {
     public static void createHtmlFromTxt(File fileName, String output) {
@@ -24,6 +24,7 @@ public class TextUtils {
 
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(htmlFileName),"UTF-8"));
 
+            //Borrowed
             writeHtmlHeader(writer,name);
 
             String aLine = reader.readLine();
@@ -41,7 +42,7 @@ public class TextUtils {
                 writer.write(aLine);
             }
             writer.write(pClose);
-            writehtmlFoot(writer);
+            writeHtmlFoot(writer);
 
             //for logging
             System.out.println(name + ".html has been created in " + output + "!");

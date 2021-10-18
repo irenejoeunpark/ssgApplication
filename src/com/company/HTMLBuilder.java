@@ -10,18 +10,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class HTMLBuilder {
+
     static void processInput(String inputFile, String output) {
         if(inputFile.endsWith(".txt")){
-            //if input file is only one file
+            //Single file
             File file = new File(inputFile);
-            //create html
             TextUtils.createHtmlFromTxt(file, output);
         }
         else if(inputFile.endsWith(".md")){
             try{
-                //if input file is only one file
                 File file = new File(inputFile);
-                //create html
                 MDUtils.createHTMLFromMd(file);
             }
             catch(Exception ex){
@@ -29,7 +27,7 @@ public class HTMLBuilder {
             }
         }
         else {
-            //if user added multiple files(directory)
+            //If user passes input directory (multiple text files)
             try {
                 List<File> allFiles = Files.walk(Paths.get(inputFile))
                         .filter(Files::isRegularFile)
@@ -38,7 +36,6 @@ public class HTMLBuilder {
                 for(File file :allFiles){
                     TextUtils.createHtmlFromTxt(file, output);
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -55,7 +52,9 @@ public class HTMLBuilder {
     }
 
     public static void writeHtmlHeader(BufferedWriter writer, String fileName){
+        //Writes html header before body tag
         try {
+            //Predefined html tags
             String htmlHeader = "<!doctype html>\r\n"
                     + "<html lang=\"en\">\r\n"
                     + "<head>\r\n"
@@ -79,7 +78,8 @@ public class HTMLBuilder {
         }
     }
 
-    public static void writehtmlFoot(BufferedWriter writer) {
+    public static void writeHtmlFoot(BufferedWriter writer) {
+        //Writes html footers after body
         try {
             String htmlFoot = "</body>\r\n"
                     + "</html>\r\n"

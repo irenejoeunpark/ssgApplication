@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static com.company.HTMLBuilder.writeHtmlHeader;
-import static com.company.HTMLBuilder.writehtmlFoot;
+import static com.company.HTMLBuilder.writeHtmlFoot;
 
 public class MDUtils {
 
@@ -28,7 +28,7 @@ public class MDUtils {
         writeHtmlHeader(writer,path.toString());
         writer.write(body);
 
-        writehtmlFoot(writer);
+        writeHtmlFoot(writer);
         writer.close();
 
     }
