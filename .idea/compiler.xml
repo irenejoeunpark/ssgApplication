@@ -9,8 +9,5 @@
         <module name="ssgApplication" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="17">
-      <module name="ssgApplication" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

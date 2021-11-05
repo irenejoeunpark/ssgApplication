@@ -12,28 +12,25 @@ import java.util.stream.Collectors;
 public class HTMLBuilder {
 
     static void processInput(String inputFile, String output) {
-        if(inputFile.endsWith(".txt")){
+        if (inputFile.endsWith(".txt")) {
             //Single file
             File file = new File(inputFile);
             TextUtils.createHtmlFromTxt(file, output);
-        }
-        else if(inputFile.endsWith(".md")){
-            try{
+        } else if (inputFile.endsWith(".md")) {
+            try {
                 File file = new File(inputFile);
                 MDUtils.createHTMLFromMd(file);
-            }
-            catch(Exception ex){
+            } catch (Exception ex) {
                 ex.printStackTrace();
             }
-        }
-        else {
+        } else {
             //If user passes input directory (multiple text files)
             try {
                 List<File> allFiles = Files.walk(Paths.get(inputFile))
                         .filter(Files::isRegularFile)
                         .map(Path::toFile)
                         .collect(Collectors.toList());
-                for(File file :allFiles){
+                for (File file : allFiles) {
                     TextUtils.createHtmlFromTxt(file, output);
                 }
             } catch (IOException e) {
@@ -45,13 +42,13 @@ public class HTMLBuilder {
     static String fileNameReader(String[] str) {
         //convert string array to string with the space
         StringBuilder s = new StringBuilder();
-        for(String arg: str) {
+        for (String arg : str) {
             s.append(arg).append(" ");
         }
-        return s.substring(0,s.length() -1);
+        return s.substring(0, s.length() - 1);
     }
 
-    public static void writeHtmlHeader(BufferedWriter writer, String fileName){
+    public static void writeHtmlHeader(BufferedWriter writer, String fileName) {
         //Writes html header before body tag
         try {
             //Predefined html tags
@@ -73,7 +70,7 @@ public class HTMLBuilder {
                     + "";
 
             writer.write(htmlHeader);
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
