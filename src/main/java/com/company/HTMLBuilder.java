@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class HTMLBuilder {
 
-    static void processInput(String inputFile, String output) {
+    public static void processInput(String inputFile, String output) {
         if (inputFile.endsWith(".txt")) {
             //Single file
             File file = new File(inputFile);
@@ -39,7 +39,7 @@ public class HTMLBuilder {
         }
     }
 
-    static String fileNameReader(String[] str) {
+    public static String fileNameReader(String[] str) {
         //convert string array to string with the space
         StringBuilder s = new StringBuilder();
         for (String arg : str) {

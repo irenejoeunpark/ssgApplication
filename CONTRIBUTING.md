@@ -52,6 +52,23 @@ java -jar out\artifacts\ssgApplication_jar\ssgApplication.jar -c <configFileName
 >2. Install and enable the plugin
 >3. Reformat the Code by "CTRL+ALT+L" in the file you worked on
 
+### Testing
+
+To test the code :
+1. Run "testProcessInput" in HTMLBuilderTest.java
+
+2. Fix any error that does not pass the testing
+
+3. Click [here](https://junit.org/junit5/docs/current/user-guide/) for more information for Junit testing framework
+
+To create a unit test :
+
+Right click the class name in the code, and select Show Context Action
+Select >Create Test< and select the function you want to add
+Add testing to the corresponding testclass
+
+
+
 ### Fix Linter
 
 >1. Run ```mvn spotbugs:gui``` to spot the area of improvement in a SpotBug UI
