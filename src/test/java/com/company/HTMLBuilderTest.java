@@ -1,4 +1,5 @@
-import com.company.HTMLBuilder;
+package com.company;
+
 import org.junit.jupiter.api.Test;
 import org.apache.commons.io.FileUtils;
 
