@@ -11,9 +11,9 @@ class HTMLBuilderTest {
 
     @Test
     void testProcessInput() throws IOException {
-        HTMLBuilder.processInput("sources/Sample.txt","testDir");
+        HTMLBuilder.processInput("sources/Sample.txt","dist");
         File target = new File("dist/Sample.html");
-        assertTrue(FileUtils.contentEquals(target,new File("testDir/Sample.html")));
+        assertTrue(FileUtils.contentEquals(target,new File("dist/Sample.html")));
     }
 
     @Test
