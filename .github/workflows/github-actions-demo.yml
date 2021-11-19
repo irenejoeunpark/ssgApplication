@@ -13,8 +13,8 @@ jobs:
           architecture: x64
       - name: Check out repository code
         uses: actions/checkout@v2
-      - name: Build with maven
-        run: mvn compile
       - name: Build maven package
-        run: mvn package
+        run: mvn package -DskipTests
+      - name: Test
+        run: mvn test
 
