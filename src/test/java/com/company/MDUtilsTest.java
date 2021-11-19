@@ -39,7 +39,7 @@ class MDUtilsTest {
         String[] hr_string1 = {"----\n"};
         assertEquals("<hr><br/>", MDUtils.getBodyFromText(hr_string1));
 
-        /* Not passed, invalid hr syntax
+        /* Not passed, invalid <hr> syntax
         String[] hr_string2 = {"----invalid hr syntax"};
         assertEquals("<p>----invalid hr syntax</p><br/>", MDUtils.getBodyFromText(hr_string2));
          */
